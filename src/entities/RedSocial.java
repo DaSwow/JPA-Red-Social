@@ -13,7 +13,10 @@ import java.util.Collection;
 import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.ManyToMany;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -25,10 +28,16 @@ import javax.persistence.Transient;
  */
 @Entity
 @Table(name = "Red Social")
-public class RedSocial extends BaseEntity implements Serializable {
+public class RedSocial  implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "REDSOCIAL_ID")
+    private Long id;
+    
+    
     @Column(nullable = false)
     private String nombre;
 
@@ -39,25 +48,26 @@ public class RedSocial extends BaseEntity implements Serializable {
     @Temporal(TemporalType.DATE)
     private Date fechaInicioOperaciones;
 
-    @ManyToMany(mappedBy = "redesSociales")
-    private Collection<Usuario> usuarios = new ArrayList();
-
     @Transient
     SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 
-    public Collection<Usuario> getUsuarios() {
-        return usuarios;
+  
+    @OneToMany(mappedBy = "red")
+    private Collection<RedSocialUsuario> usuarioRed = new ArrayList();
+
+      
+    public Collection<RedSocialUsuario> getUsuarioRed() {
+        return usuarioRed;
     }
 
-    public void setUsuarios(Collection<Usuario> usuarios) {
-        this.usuarios = usuarios;
+    public void setUsuarios(Collection<RedSocialUsuario> usuarios) {
+        this.usuarioRed = usuarios;
     }
 
-    public void addUsuario(Usuario usuario) {
-        if (!usuarios.contains(usuario)) {
-            usuarios.add(usuario);
-            usuario.addRedSocial(this);
-        }
+    public void addUsuario(RedSocialUsuario usuarioGrupo) {
+
+            usuarioRed.add(usuarioGrupo);
+         
     }
 
     public String getSitioWeb() {
@@ -68,6 +78,7 @@ public class RedSocial extends BaseEntity implements Serializable {
         this.sitioWeb = sitioWeb;
     }
 
+    @Id
     public Date getFechaInicioOperaciones() {
         return fechaInicioOperaciones;
     }
@@ -88,9 +99,18 @@ public class RedSocial extends BaseEntity implements Serializable {
         this.nombre = nombre;
     }
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    
     @Override
     public String toString() {
-        return  this.getClass().getSimpleName() + "[ nombre=" + nombre + " ]";
+        return this.getClass().getSimpleName() + "[ nombre=" + nombre + " ]";
     }
 
 }

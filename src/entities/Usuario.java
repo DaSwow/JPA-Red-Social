@@ -16,8 +16,10 @@ import java.util.Collection;
 import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -29,46 +31,44 @@ import javax.persistence.Transient;
  */
 @Entity
 @Table(name = "Usuario")
-public class Usuario extends BaseEntity implements Serializable {
+public class Usuario implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @Column(nullable = false)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "USUARIO_ID")
+    private Long id;
+
     private String correoElectronico;
 
-    @Column(nullable = false)
     private String sexo;
 
     @Temporal(TemporalType.DATE)
     private Date fechaNacimiento;
 
-    @Column(nullable = false)
     private Integer edad;
 
-    @Column(nullable = false)
     private String nombre;
-
-    @ManyToMany
-    @JoinTable(name = "Red Social Usuario")
-    private Collection<RedSocial> redesSociales = new ArrayList();
 
     @Transient
     SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 
-    public Collection<RedSocial> getRedesSociales() {
-        return redesSociales;
+    @OneToMany(mappedBy = "usuario")
+    private Collection<RedSocialUsuario> usuarioRed = new ArrayList();
+
+    public Collection<RedSocialUsuario> getUsuarioRed() {
+        return usuarioRed;
     }
 
-    public void setRedesSociales(Collection<RedSocial> redesSociales) {
-        this.redesSociales = redesSociales;
+    public void setRedesSociales(Collection<RedSocialUsuario> redesSociales) {
+        this.usuarioRed = redesSociales;
     }
 
-    
-    public void addRedSocial(RedSocial red) {
-        if (!redesSociales.contains(red)) {
-            redesSociales.add(red);
-            red.addUsuario(this);
-        }
+    public void addRedSocial(RedSocialUsuario red) {
+
+        usuarioRed.add(red);
+
     }
 
     public String getCorreoElectronico() {
@@ -122,6 +122,14 @@ public class Usuario extends BaseEntity implements Serializable {
         return dateToConvert.toInstant()
                 .atZone(ZoneId.systemDefault())
                 .toLocalDate();
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     @Override

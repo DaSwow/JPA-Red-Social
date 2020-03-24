@@ -5,6 +5,7 @@
     <class>entities.RedSocial</class>
     <class>entities.BaseEntity</class>
     <class>entities.Usuario</class>
+    <class>entities.RedSocialUsuario</class>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/redsocial?zeroDateTimeBehavior=convertToNull"/>
       <property name="javax.persistence.jdbc.user" value="root"/>

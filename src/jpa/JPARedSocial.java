@@ -1,6 +1,7 @@
 package jpa;
 
 import entities.RedSocial;
+import entities.RedSocialUsuario;
 import entities.Usuario;
 import java.util.Iterator;
 import javax.persistence.EntityManager;
@@ -49,18 +50,15 @@ public class JPARedSocial {
         System.out.println(red.getFechaInicioOperaciones());
         System.out.println(red.getNombre());
 
-        usuario.addRedSocial(red);
+        RedSocialUsuario redUsuario=new RedSocialUsuario();
+        redUsuario.setAtributos(red, usuario, "12/09/2012","Johnny");
+        
+        
 
-        for (Iterator i = usuario.getRedesSociales().iterator(); i.hasNext();) {
-            System.out.println(i.next().toString());
-        }
-
-        for (Iterator i = red.getUsuarios().iterator(); i.hasNext();) {
-            System.out.println(i.next().toString());
-        }
-
+   
         entityManager.persist(usuario);
         entityManager.persist(red);
+        entityManager.persist(redUsuario);
 
         entityManager.getTransaction().commit();
     }
