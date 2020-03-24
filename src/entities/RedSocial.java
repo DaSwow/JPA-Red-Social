@@ -16,6 +16,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 
 /**
  *
@@ -35,8 +36,9 @@ public class RedSocial extends BaseEntity implements Serializable {
     private Date fechaInicioOperaciones;
 
     @ManyToMany(mappedBy = "redesSociales")
-    private Collection<Usuario> usuarios=new ArrayList();
+    private Collection<Usuario> usuarios = new ArrayList();
 
+    @Transient
     SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 
     public Collection<Usuario> getUsuarios() {
@@ -53,8 +55,6 @@ public class RedSocial extends BaseEntity implements Serializable {
             usuario.addRedSocial(this);
         }
     }
-
-
 
     public String getSitioWeb() {
         return sitioWeb;
@@ -74,6 +74,19 @@ public class RedSocial extends BaseEntity implements Serializable {
         } catch (ParseException e) {
             e.printStackTrace();
         }
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    @Override
+    public String toString() {
+        return  this.getClass().getSimpleName() + "[ nombre=" + nombre + " ]";
     }
 
 }

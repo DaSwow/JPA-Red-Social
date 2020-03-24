@@ -14,12 +14,14 @@ import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 
 /**
  *
@@ -31,8 +33,6 @@ public class Usuario extends BaseEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    private String nombre;
-
     private String correoElectronico;
 
     private String sexo;
@@ -42,10 +42,13 @@ public class Usuario extends BaseEntity implements Serializable {
 
     private Integer edad;
 
+    private String nombre;
+
     @ManyToMany
     @JoinTable(name = "Red Social Usuario")
-    private Collection<RedSocial> redesSociales=new ArrayList();
+    private Collection<RedSocial> redesSociales = new ArrayList();
 
+    @Transient
     SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 
     public Collection<RedSocial> getRedesSociales() {
@@ -62,7 +65,6 @@ public class Usuario extends BaseEntity implements Serializable {
             red.addUsuario(this);
         }
     }
-
 
     public String getCorreoElectronico() {
         return correoElectronico;
@@ -103,10 +105,23 @@ public class Usuario extends BaseEntity implements Serializable {
         this.edad = edad;
     }
 
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
     public LocalDate convertToLocalDateViaInstant(Date dateToConvert) {
         return dateToConvert.toInstant()
                 .atZone(ZoneId.systemDefault())
                 .toLocalDate();
+    }
+
+    @Override
+    public String toString() {
+        return this.getClass().getSimpleName() + "[ nombre=" + nombre + " ]";
     }
 
 }

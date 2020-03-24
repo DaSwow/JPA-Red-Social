@@ -43,7 +43,9 @@ public class JPARedSocial {
         red.setSitioWeb("facebook.com");
         red.setFechaInicioOperaciones("15/05/2005");
         System.out.println(red.getFechaInicioOperaciones());
-       
+        System.out.println(red.getNombre());
+        
+        
         usuario.addRedSocial(red);
         
        for (Iterator i = usuario.getRedesSociales().iterator(); i.hasNext(); ) 
