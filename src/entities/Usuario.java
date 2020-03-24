@@ -60,6 +60,7 @@ public class Usuario extends BaseEntity implements Serializable {
         this.redesSociales = redesSociales;
     }
 
+    
     public void addRedSocial(RedSocial red) {
         if (!redesSociales.contains(red)) {
             redesSociales.add(red);
