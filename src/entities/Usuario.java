@@ -50,7 +50,6 @@ public class Usuario extends BaseEntity implements Serializable {
 
     @ManyToMany
     @JoinTable(name = "Red Social Usuario")
-    
     private Collection<RedSocial> redesSociales = new ArrayList();
 
     @Transient
