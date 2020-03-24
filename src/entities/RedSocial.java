@@ -11,6 +11,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
@@ -28,10 +29,13 @@ public class RedSocial extends BaseEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    @Column(nullable = false)
     private String nombre;
 
+    @Column(nullable = false)
     private String sitioWeb;
 
+    @Column(nullable = false)
     @Temporal(TemporalType.DATE)
     private Date fechaInicioOperaciones;
 

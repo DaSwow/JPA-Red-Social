@@ -33,15 +33,19 @@ public class Usuario extends BaseEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    @Column(nullable = false)
     private String correoElectronico;
 
+    @Column(nullable = false)
     private String sexo;
 
     @Temporal(TemporalType.DATE)
     private Date fechaNacimiento;
 
+    @Column(nullable = false)
     private Integer edad;
 
+    @Column(nullable = false)
     private String nombre;
 
     @ManyToMany
